@@ -1,40 +1,52 @@
 <?php
 
-function generatePassword($length)
+function generatePassword($length, $options)
 {
 
     $password = "";
 
     // Data validation
     if ($length < 4) {
-        // password too short 
-        // $error = "Password must be longer than 3 characters";
+        // password too short
         return false;
     } else {
 
         // Declare password sampler 
-        $sampler = array(
+        $sampler = [];
+        if ($options["lower"]) {
             /* "lower" */
-            "abcdefghijklmnopqrstuvwxyz",
+            $sampler[] = "abcdefghijklmnopqrstuvwxyz";
+        }
+        if ($options["upper"]) {
             /* "upper" */
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+            $sampler[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        }
+        if ($options["cipher"]) {
             /* "cipher" */
-            "0123456789",
+            $sampler[] = "0123456789";
+        }
+        if ($options["symbol"]) {
             /* "symbol" */
-            "!@#$%^&*()-_=+;:,.<>/?\"'\|",
-        );
+            $sampler[] = "!@#$%^&*()-_=+;:,.<>/?\"'\|";
+        }
 
         // Generate password
         for ($i = 0; $i < $length; $i++) {
 
             // determine which type of sample (lower, upper...) to pick from
             $type = $i;
-            if ($i > 3) {
-                $type = rand(0, 3);
+            if ($i >= count($sampler)) {
+                $type = rand(0, count($sampler) - 1);
             }
 
             // pick and concatenate char
-            $password .= $sampler[$type][rand(0, strlen($sampler[$type]) - 1)];
+            $pick = rand(0, strlen($sampler[$type]) - 1);
+            $password .= $sampler[$type][$pick];
+
+            // allow repetitions
+            if (!$options["repetition"]) {
+                $sampler[$type] = substr_replace($sampler[$type], '', $pick, 1);
+            }
         }
 
         //shuffle the characters of the password

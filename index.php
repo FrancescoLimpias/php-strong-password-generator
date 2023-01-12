@@ -10,8 +10,15 @@ $error = "";
 $length = $_GET["length"] ?? false;
 if ($length) {
 
+    // check for options
+    $supportedOptions = ["lower", "upper", "cipher", "symbol", "repetition"];
+    $options = [];
+    foreach ($supportedOptions as $supportedOption) {
+        $options[$supportedOption] = $_GET[$supportedOption] ?? false;
+    }
+
     // try to generate password
-    $password = generatePassword($length);
+    $password = generatePassword($length, $options);
 
     // if SUCCESS then redirect
     if ($password) {
@@ -30,26 +37,56 @@ if ($length) {
 <html lang="en">
 
 <head>
+
+    <!-- Compatibility -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ID -->
     <title>Document</title>
+
+    <!-- Fontawesome -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+
 </head>
 
 <body>
     <form action="">
         <h3>Password Generator</h3>
-        <!-- <span class="error" style="color:red"><?= $error ?></span>
-        <br> -->
+
+        <!-- Error display -->
+        <?php if ($error) { ?>
+            <span class="error" style="color: red">
+                <?= $error ?>
+            </span>
+            <br>
+        <?php } ?>
+
+        <!-- Password length -->
         <label for="input-lenght">Lenght: </label>
         <input type="number" name="length" id="input-length">
+        <br>
+
+        <!-- Allowed types -->
+        <label for="check-lower">Minuscole</i></label>
+        <input type="checkbox" name="lower" id="check-lower" checked>
+        <label for="check-upper">Maiuscole</label>
+        <input type="checkbox" name="upper" id="check-upper" checked>
+        <label for="check-number">Cifre</label>
+        <input type="checkbox" name="cipher" id="check-number" checked>
+        <label for="check-symbol">Simboli</label>
+        <input type="checkbox" name="symbol" id="check-symbol" checked>
+        <br>
+
+        <!-- Repetitive characters -->
+        <label for="check-repetition">Ripetizioni</label>
+        <input type="checkbox" name="repetition" id="check-repetition">
+
+        <!-- Submit -->
         <input type="submit" value="Run">
+
     </form>
-    <?php if ($error) { ?>
-        <span class="error">
-            <?= $error ?>
-        </span>
-    <?php } ?>
 </body>
 
 </html>
