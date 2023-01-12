@@ -46,47 +46,50 @@ if ($length) {
     <!-- ID -->
     <title>Document</title>
 
+    <link rel="stylesheet" type="text/css" href="style.css">
+
     <!-- Fontawesome -->
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
 
 </head>
 
 <body>
-    <form action="">
+    <div class="form-container">
+
         <h3>Password Generator</h3>
 
-        <!-- Error display -->
-        <?php if ($error) { ?>
-            <span class="error" style="color: red">
-                <?= $error ?>
-            </span>
-            <br>
-        <?php } ?>
+        <form>
 
-        <!-- Password length -->
-        <label for="input-lenght">Lenght: </label>
-        <input type="number" name="length" id="input-length">
-        <br>
+            <!-- Error display -->
+            <?php if ($error) { ?>
+                <span class="error" style="color: red">
+                    <?= $error ?>
+                </span>
+                <br>
+            <?php } ?>
 
-        <!-- Allowed types -->
-        <label for="check-lower">Minuscole</i></label>
-        <input type="checkbox" name="lower" id="check-lower" checked>
-        <label for="check-upper">Maiuscole</label>
-        <input type="checkbox" name="upper" id="check-upper" checked>
-        <label for="check-number">Cifre</label>
-        <input type="checkbox" name="cipher" id="check-number" checked>
-        <label for="check-symbol">Simboli</label>
-        <input type="checkbox" name="symbol" id="check-symbol" checked>
-        <br>
+            <!-- Password length -->
+            <label for="input-lenght">Password length: </label>
+            <input type="number" name="length" id="input-length" placeholder="length">
 
-        <!-- Repetitive characters -->
-        <label for="check-repetition">Ripetizioni</label>
-        <input type="checkbox" name="repetition" id="check-repetition">
-
-        <!-- Submit -->
-        <input type="submit" value="Run">
-
-    </form>
+            <div class="checkbox-container">
+                <!-- Allowed types -->
+                <label for="check-lower">Minuscole</i></label>
+                <input type="checkbox" name="lower" id="check-lower" checked>
+                <label for="check-upper">Maiuscole</label>
+                <input type="checkbox" name="upper" id="check-upper" checked>
+                <label for="check-number">Cifre</label>
+                <input type="checkbox" name="cipher" id="check-number" checked>
+                <label for="check-symbol">Simboli</label>
+                <input type="checkbox" name="symbol" id="check-symbol" checked>
+                <!-- Repetitive characters -->
+                <label for="check-repetition">Ripetizioni</label>
+                <input type="checkbox" name="repetition" id="check-repetition">
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+        
+    </div>
 </body>
 
 </html>
