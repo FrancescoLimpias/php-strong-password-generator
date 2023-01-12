@@ -3,7 +3,8 @@
 require_once __DIR__ . "/helper.php";
 
 // Global variables
-$password = null;
+$password;
+$error = "";
 
 // Listen for GET Submission
 $length = $_GET["length"] ?? false;
@@ -17,6 +18,8 @@ if ($length) {
         session_start();
         $_SESSION["password"] = $password;
         header("Location: youmadeit.php");
+    } else {
+        $error = "Error generating the password.";
     }
 }
 
@@ -42,11 +45,11 @@ if ($length) {
         <input type="number" name="length" id="input-length">
         <input type="submit" value="Run">
     </form>
-    <span class="password error">
-        <?php if ($password != null && $password == false) { ?>
-            Error generating the password.
-        <?php } ?>
-    </span>
+    <?php if ($error) { ?>
+        <span class="error">
+            <?= $error ?>
+        </span>
+    <?php } ?>
 </body>
 
 </html>
